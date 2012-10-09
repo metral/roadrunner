@@ -22,12 +22,10 @@ def create_graphs_dir(instance_name):
     
     return instance_dirpath
 #-------------------------------------------------------------------------------
-def generate_graphs(instance_name, graphs_dirpath):
+def generate_graphs(collectd_path, graphs_dirpath):
     dirpath = os.path.dirname(sys.argv[0])
     gen_graphs_path = '/'.join([dirpath, "generate_graphs.sh"])
 
-    collectd_path = "/var/lib/collectd/rrd/%s/libvirt/" % (instance_name)
-    
     cmd_args = " ".join([gen_graphs_path, collectd_path, graphs_dirpath])
     
     cmd = subprocess.Popen(cmd_args, stdout = subprocess.PIPE, shell=True)
@@ -48,22 +46,22 @@ def tar_graphs(graphs_dirpath):
     
     return tarball_name
 #-------------------------------------------------------------------------------
-def check_collectd_path():
-    collectd_path = "/var/lib/collectd/rrd/%s/libvirt/" % (instance_name)
+def check_collectd_path(instance_name):
+    collectd_path = "/var/lib/collectd/rrd/%s/libvirt" % (instance_name)
     
     if not os.path.exists(collectd_path):
-        sys.stderr.write('error\n')
+        sys.stderr.write('ERROR - %s does not exist.' % (instance_name))
         sys.exit(0);
 
     return collectd_path
 #-------------------------------------------------------------------------------
 def main():
     instance_name = sys.argv[1]
-    collectd_path = check_collectd_path
+    collectd_path = check_collectd_path(instance_name)
         
     graphs_dirpath = create_graphs_dir(instance_name)
     
-    generate_graphs(instance_name, graphs_dirpath)
+    generate_graphs(collectd_path, graphs_dirpath)
     tarball_name = tar_graphs(graphs_dirpath)
     print tarball_name
 #-------------------------------------------------------------------------------

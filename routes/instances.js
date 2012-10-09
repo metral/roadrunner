@@ -4,7 +4,7 @@ var http = require('http'),
     path = require('path'),
     util = require('util');
 
-var collectd_path = "scripts";
+var collectd_path = "collectd_scripts";
 var collect_vm_stats_path = path.join(collectd_path, "collect_vm_stats.py")
 //------------------------------------------------------------------------------
 function serveFile(filepath, req, res) {
@@ -27,7 +27,7 @@ function generateGraphs(instance_name, req, res) {
     
     exec(cmd, function (error, stdout, stderr) {
         filepath = stdout.replace("\n", "");
-        console.log('filepath: %s', filepath);
+        console.log('\nfilepath: %s', filepath);
         if (stderr == "") {
             serveFile(filepath, req, res);
         }
