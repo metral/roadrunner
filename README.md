@@ -47,6 +47,7 @@ to perform the data collection, graph generation and graph hosting.
 
 3. Install node.js dependencies
 
+    `cd roadrunner`  
     `npm install`
 
 <!---------------------------------------------------------------------------->
@@ -54,6 +55,7 @@ to perform the data collection, graph generation and graph hosting.
 <h3>Run & Interact Server</h3>
 1. Run server
 
+    `cd roadrunner`  
     `node server.js` 
 
 2. Pull collectd + libvirt graphs via API
